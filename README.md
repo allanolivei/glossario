@@ -39,6 +39,10 @@ O build gera `dist/` e, em seguida, o índice em `dist/pagefind/`. Na prévia do
 
 Crie `src/content/terms/<slug>.md`. O frontmatter exige `title` e `definition`; `aliases` e `categories` são opcionais. No corpo, use as seções **Comandos úteis**, **Exemplo de uso** e **Referências** quando fizerem sentido. A listagem e a página individual usam o mesmo arquivo. O nome do arquivo define a URL `/termos/<slug>/`.
 
+## Edição pelo Pages CMS
+
+O arquivo `.pages.yml` configura a coleção **Termos** no [Pages CMS](https://app.pagescms.org/). Depois que o GitHub App do Pages CMS for instalado com acesso somente a este repositório, entre no painel, selecione `allanolivei/glossario` e edite os termos. As alterações são gravadas como commits no repositório; o GitHub Pages publica a atualização após o workflow concluir.
+
 ## Publicação
 
 O workflow `.github/workflows/deploy.yml` publica no GitHub Pages a cada push para `main`, no endereço <https://allanolivei.github.io/glossario/>. Ele configura automaticamente o caminho base `/glossario` e envia o conteúdo gerado em `dist`.

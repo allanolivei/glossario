@@ -1,0 +1,41 @@
+content:
+  - name: terms
+    label: Termos
+    type: collection
+    path: src/content/terms
+    format: yaml-frontmatter
+    filename: "{title}.md"
+    fields:
+      - name: title
+        label: Termo
+        type: string
+        required: true
+      - name: definition
+        label: Definição curta
+        type: text
+        required: true
+      - name: aliases
+        label: Nomes alternativos
+        type: string
+        list: true
+      - name: categories
+        label: Categorias
+        type: string
+        list: true
+      - name: body
+        label: Comandos, exemplos e referências
+        type: rich-text
+        options:
+          format: markdown
+    view:
+      primary: title
+      fields: [title, definition]
+      search: [title, definition, aliases, categories]
+      sort: [title]
+      default:
+        sort: title
+        order: asc
+
+# Preserva campos que ainda não estão no editor estruturado.
+settings:
+  content: true
