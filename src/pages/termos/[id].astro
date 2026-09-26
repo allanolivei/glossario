@@ -1,0 +1,55 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection, render } from 'astro:content';
+import CodeCopyButtons from '../../components/CodeCopyButtons';
+import TermSidebar from '../../components/TermSidebar';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('terms');
+  return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+interface Props {
+  entry: CollectionEntry<'terms'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const collator = new Intl.Collator('pt-BR', { sensitivity: 'base' });
+const sidebarTerms = (await getCollection('terms'))
+  .sort((a, b) => collator.compare(a.data.title, b.data.title))
+  .map((term) => ({
+    id: term.id,
+    title: term.data.title,
+    definition: term.data.definition,
+    aliases: term.data.aliases,
+    searchText: term.body ?? '',
+  }));
+---
+
+<BaseLayout
+  title={`${entry.data.title} | Glossário`}
+  description={entry.data.definition}
+  canonicalPath={`/termos/${entry.id}/`}
+>
+  <main class="grid min-w-0 gap-8 py-8 sm:py-12 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10">
+    <TermSidebar client:load terms={sidebarTerms} currentId={entry.id} />
+    <article class="min-w-0" data-pagefind-body>
+      <a class="mb-6 inline-block text-sm text-neutral-300 underline underline-offset-4 hover:text-neutral-100" href="/">
+        ← Todos os termos
+      </a>
+      <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl" data-pagefind-meta="title">
+        {entry.data.title}
+      </h1>
+      <p class="mt-4 text-lg leading-8 text-neutral-200">{entry.data.definition}</p>
+      {entry.data.aliases.length > 0 && (
+        <p class="mt-3 text-sm text-neutral-300">Também conhecido como: {entry.data.aliases.join(', ')}</p>
+      )}
+      <div class="term-content mt-8 border-t border-neutral-700 pt-2">
+        <Content />
+      </div>
+      <CodeCopyButtons client:load />
+    </article>
+  </main>
+</BaseLayout>

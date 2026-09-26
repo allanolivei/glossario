@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import TermExplorer from '../components/TermExplorer';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const collator = new Intl.Collator('pt-BR', { sensitivity: 'base' });
+const entries = (await getCollection('terms')).sort((a, b) =>
+  collator.compare(a.data.title, b.data.title),
+);
+const searchTerms = entries.map((entry) => ({
+  id: entry.id,
+  title: entry.data.title,
+  definition: entry.data.definition,
+  aliases: entry.data.aliases,
+  searchText: entry.body ?? '',
+}));
+---
+
+<BaseLayout
+  title="Glossário de programação"
+  description="Termos de programação com definições rápidas, comandos e exemplos de uso."
+  canonicalPath="/"
+>
+  <main class="py-12 sm:py-16">
+    <p class="text-sm font-medium uppercase tracking-widest text-neutral-300">Consulta rápida</p>
+    <h1 class="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">Glossário de programação</h1>
+    <p class="mt-4 max-w-2xl text-lg leading-8 text-neutral-200">
+      Encontre uma definição curta. Acesse um termo para ver comandos, referências e exemplos.
+    </p>
+
+    <TermExplorer client:load terms={searchTerms} />
+  </main>
+</BaseLayout>

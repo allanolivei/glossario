@@ -1,0 +1,37 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+}
+
+const { title, description, canonicalPath } = Astro.props;
+const canonical = new URL(canonicalPath, Astro.site ?? Astro.url).href;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen bg-neutral-900 text-neutral-100 antialiased">
+    <div class="mx-auto flex min-h-screen max-w-[1180px] flex-col px-5 sm:px-8">
+      <header class="flex items-center justify-between border-b border-neutral-700 py-6">
+        <a class="text-lg font-semibold tracking-tight hover:text-neutral-200" href="/">Glossário</a>
+        <span class="text-sm text-neutral-300">Programação, sem rodeios.</span>
+      </header>
+      <slot />
+      <footer class="mt-auto border-t border-neutral-700 py-6 text-sm text-neutral-300">
+        Definições rápidas para consultar quando precisar.
+      </footer>
+    </div>
+  </body>
+</html>

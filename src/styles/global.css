@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+}
+
+.term-content h2 {
+  @apply mt-8 mb-3 text-lg font-semibold text-neutral-100;
+}
+
+.term-content h3 {
+  @apply mt-6 mb-2 font-semibold text-neutral-100;
+}
+
+.term-content p {
+  @apply my-3 leading-7 text-neutral-200;
+}
+
+.term-content ul,
+.term-content ol {
+  @apply my-3 space-y-2 pl-6 leading-7 text-neutral-200;
+}
+
+.term-content ul {
+  list-style-type: disc;
+}
+
+.term-content ol {
+  list-style-type: decimal;
+}
+
+.term-content a {
+  @apply text-sky-300 underline decoration-neutral-500 underline-offset-4 hover:decoration-sky-200;
+}
+
+.term-content :not(pre) > code {
+  @apply rounded bg-neutral-700 px-1.5 py-0.5 text-sm text-neutral-100;
+}
+
+.term-content pre {
+  @apply relative my-4 overflow-x-auto rounded-xl border border-neutral-700 p-4 text-sm leading-6 text-neutral-100;
+  background-color: #24292e;
+}
+
+.term-content pre code {
+  background: transparent;
+}
+
+.copy-code-button {
+  @apply absolute top-2 right-2 grid size-7 place-items-center rounded-md border border-neutral-500 bg-neutral-800/90 text-neutral-100 opacity-10 transition-opacity hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300;
+}
+
+.term-content pre:hover .copy-code-button,
+.term-content pre:focus-within .copy-code-button {
+  opacity: 1;
+}
+
+.copy-code-button svg {
+  @apply size-3.5 fill-none stroke-current stroke-2;
+}
+
+.copy-inline-button svg {
+  @apply size-3 fill-none stroke-current stroke-2;
+}
+
+.copy-inline-wrap {
+  @apply relative inline-flex align-baseline;
+}
+
+.term-content .copy-inline-wrap > code {
+  @apply pr-5;
+  background-color: #24292e;
+}
+
+.copy-inline-button {
+  @apply absolute top-1/2 right-0 grid size-4 -translate-y-1/2 place-items-center rounded text-neutral-100 opacity-10 transition-opacity hover:bg-neutral-600 hover:opacity-100 focus-visible:bg-neutral-600 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-sky-300;
+}
+
+.copy-inline-wrap:hover .copy-inline-button,
+.copy-inline-wrap:focus-within .copy-inline-button {
+  opacity: 1;
+}
