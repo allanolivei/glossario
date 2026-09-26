@@ -10,6 +10,7 @@ type Term = {
 
 const normalize = (value: string) =>
   value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
+const BASE_PATH = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 
 export default function TermSidebar({
   terms,
@@ -57,7 +58,7 @@ export default function TermSidebar({
               {filteredTerms.map((term) => (
                 <li key={term.id}>
                   <a
-                    href={`${import.meta.env.BASE_URL}termos/${term.id}/`}
+                    href={`${BASE_PATH}termos/${term.id}/`}
                     aria-current={term.id === currentId ? 'page' : undefined}
                     className={`block rounded-md px-3 py-2 text-sm transition-colors ${
                       term.id === currentId

@@ -1,6 +1,6 @@
 # Glossário
 
-Glossário de programação em português, com definições rápidas, comandos e exemplos. O site é gerado pelo Astro a partir de arquivos Markdown. React cuida da busca interativa, Tailwind CSS dos estilos e Pagefind gera o índice de busca depois do build. A hospedagem prevista é Cloudflare Pages.
+Glossário de programação em português, com definições rápidas, comandos e exemplos. O site é gerado pelo Astro a partir de arquivos Markdown. React cuida da busca interativa, Tailwind CSS dos estilos e Pagefind gera o índice de busca depois do build. A hospedagem principal é Cloudflare Pages; GitHub Pages também pode publicar a versão estática.
 
 ## Requisitos
 
@@ -42,3 +42,5 @@ Crie `src/content/terms/<slug>.md`. O frontmatter exige `title` e `definition`; 
 ## Publicação
 
 No Cloudflare Pages, conecte este repositório privado, use `npm run build` como comando de build e `dist` como diretório de saída. O arquivo `.node-version` fixa Node 24.20.0 no build remoto. Defina `SITE_URL` com a URL pública final antes do deploy para gerar links canônicos, `robots.txt` e sitemap corretos. O Dockerfile é usado localmente; o Pages executa o build na infraestrutura da Cloudflare.
+
+O workflow `.github/workflows/deploy.yml` também publica no GitHub Pages a cada push para `main`, no endereço `https://allanolivei.github.io/glossario/`. Ele configura automaticamente o caminho base `/glossario` e envia o conteúdo gerado em `dist`.

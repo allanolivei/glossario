@@ -27,6 +27,7 @@ type PagefindModule = {
 };
 
 const PAGE_SIZE = 8;
+const BASE_PATH = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const normalize = (value: string) =>
   value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
 const plainText = (value: string) => value.replace(/<[^>]+>/g, '').trim();
@@ -76,7 +77,7 @@ export default function TermExplorer({ terms }: { terms: TermSummary[] }) {
     const timer = window.setTimeout(async () => {
       let next: Result[];
       try {
-        const bundleUrl = `${import.meta.env.BASE_URL}pagefind/pagefind.js`;
+        const bundleUrl = `${BASE_PATH}pagefind/pagefind.js`;
         const pagefind = (await import(/* @vite-ignore */ bundleUrl)) as PagefindModule;
         const matches = await pagefind.search(value);
         next = await Promise.all(
@@ -96,7 +97,7 @@ export default function TermExplorer({ terms }: { terms: TermSummary[] }) {
           .filter((term) => normalize(`${term.title} ${term.definition} ${term.aliases.join(' ')} ${term.searchText}`).includes(needle))
           .slice(0, 20)
           .map((term) => ({
-            url: `${import.meta.env.BASE_URL}termos/${term.id}/`,
+            url: `${BASE_PATH}termos/${term.id}/`,
             title: term.title,
             description: term.definition,
           }));
@@ -180,7 +181,7 @@ export default function TermExplorer({ terms }: { terms: TermSummary[] }) {
                 <li key={term.id}>
                   <a
                     className="block rounded-xl border border-neutral-700 bg-neutral-800 px-5 py-4 transition-colors hover:border-neutral-500 hover:bg-neutral-700 focus-visible:outline-2 focus-visible:outline-sky-300"
-                    href={`${import.meta.env.BASE_URL}termos/${term.id}/`}
+                    href={`${BASE_PATH}termos/${term.id}/`}
                   >
                     <span className="block text-lg font-semibold text-neutral-100">{term.title}</span>
                     <span className="mt-1 block leading-7 text-neutral-300">{term.definition}</span>

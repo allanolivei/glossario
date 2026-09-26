@@ -16,6 +16,7 @@ interface Props {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+const basePath = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const collator = new Intl.Collator('pt-BR', { sensitivity: 'base' });
 const sidebarTerms = (await getCollection('terms'))
   .sort((a, b) => collator.compare(a.data.title, b.data.title))
@@ -36,7 +37,7 @@ const sidebarTerms = (await getCollection('terms'))
   <main class="grid min-w-0 gap-8 py-8 sm:py-12 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10">
     <TermSidebar client:load terms={sidebarTerms} currentId={entry.id} />
     <article class="min-w-0" data-pagefind-body>
-      <a class="mb-6 inline-block text-sm text-neutral-300 underline underline-offset-4 hover:text-neutral-100" href="/">
+      <a class="mb-6 inline-block text-sm text-neutral-300 underline underline-offset-4 hover:text-neutral-100" href={basePath}>
         ← Todos os termos
       </a>
       <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl" data-pagefind-meta="title">
